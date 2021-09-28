@@ -5,11 +5,13 @@ import urllib.parse
 from pathlib import Path
 import os
 import csv
+import pdb
 
 @click.command()
 @click.argument('query')
 @click.option('--folder', default="torrents", help='Folder in which to save torrent files.')
-def search(query, folder):
+@click.option('--file', default="identifiers.csv", help='Save the identifier csv file.')
+def search(query, folder, file):
     Path(folder).mkdir(parents=True, exist_ok=True)
     archive = "https://archive.org/advancedsearch.php?q={}&fl%5B%5D=identifier&rows=1000000000&page=1&output=csv"
     safe_string = urllib.parse.quote_plus(query)
@@ -22,7 +24,10 @@ def search(query, folder):
     except Exception as err:
         print(f'Other error occurred: {err}')
     else:
+        with open(file, 'wb+') as f:
+            f.write(r.content)
         decoded_content = r.content.decode('utf-8')
+        pdb.set_trace()
         cr = csv.reader(decoded_content.splitlines(), delimiter=',')
         identifiers = list(cr)
         for row in identifiers:
