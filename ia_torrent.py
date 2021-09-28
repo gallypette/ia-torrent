@@ -5,7 +5,6 @@ import urllib.parse
 from pathlib import Path
 import os
 import csv
-import pdb
 
 @click.command()
 @click.argument('query')
@@ -24,10 +23,9 @@ def search(query, folder, file):
     except Exception as err:
         print(f'Other error occurred: {err}')
     else:
-        with open(file, 'wb+') as f:
-            f.write(r.content)
         decoded_content = r.content.decode('utf-8')
-        pdb.set_trace()
+        with open(file, 'w+') as f:
+            f.write(decoded_content.replace('"', ''))
         cr = csv.reader(decoded_content.splitlines(), delimiter=',')
         identifiers = list(cr)
         for row in identifiers:
