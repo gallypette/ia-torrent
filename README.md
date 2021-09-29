@@ -6,14 +6,15 @@ ia_torrent retrieves torrent files corresponding to a search request on the Inte
 
 Install the requirements:
 ```
-$ pip install -r requirements.txt
+./install.sh
 ```
 
 # Run the application:
 ```
-$ python -m ia_torrent --help
-$ python -m ia_torrent <search request>
-$ python -m ia_torrent <search request> --folder [folder]
+$ . ./venv/bin/activate
+$ python ia_torrent --help
+$ python ia_torrent <search request>
+$ python ia_torrent <search request> --folder [folder]
 ```
 For instance:
 ```
